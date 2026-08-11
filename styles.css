@@ -375,3 +375,26 @@ body {
     gap: 4px;
   }
 }
+
+.seo-footer {
+  width: min(100%, 720px);
+  margin: 8px auto 0;
+  padding: 0 8px 12px;
+  text-align: center;
+}
+
+.seo-footer p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.seo-footer a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.seo-footer a:hover {
+  text-decoration: underline;
+}
