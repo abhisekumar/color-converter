@@ -439,5 +439,21 @@
     });
   });
 
+  document.addEventListener("keydown", function (event) {
+    if (event.target.matches("input, textarea, select, [contenteditable='true']")) {
+      return;
+    }
+    if (event.metaKey || event.ctrlKey || event.altKey) {
+      return;
+    }
+
+    if (event.key === "c" || event.key === "C") {
+      const mainCopyBtn = document.querySelector('[data-copy="main"]');
+      if (!mainCopyBtn) return;
+      event.preventDefault();
+      mainCopyBtn.click();
+    }
+  });
+
   render();
 })();
