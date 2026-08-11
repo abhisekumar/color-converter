@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color Converter</title>
+    <meta
+      name="description"
+      content="Convert colors between HEX, RGB, HSL, and CMYK with live preview and opacity control."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23111827' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='13.5' cy='6.5' r='.5' fill='%23111827'/%3E%3Ccircle cx='17.5' cy='10.5' r='.5' fill='%23111827'/%3E%3Ccircle cx='8.5' cy='7.5' r='.5' fill='%23111827'/%3E%3Ccircle cx='6.5' cy='12.5' r='.5' fill='%23111827'/%3E%3Cpath d='M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="header">
+        <div class="title-wrap">
+          <svg class="title-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
+            <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
+            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
+            <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
+            <path
+              d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <h1>Color Converter</h1>
+        </div>
+        <p class="subtitle">HEX · RGB · HSL · CMYK</p>
+      </header>
+
+      <section class="picker-panel">
+        <div class="picker-stack">
+          <div
+            id="svPicker"
+            class="sv-picker"
+            role="slider"
+            tabindex="0"
+            aria-label="Saturation and brightness"
+            aria-valuetext="Saturation 88%, Brightness 86%"
+          >
+            <div id="svCursor" class="sv-cursor"></div>
+          </div>
+
+          <div class="slider-row">
+            <label class="sr-only" for="hue">Hue</label>
+            <input id="hue" class="hue-slider" type="range" min="0" max="360" value="205" />
+          </div>
+
+          <div class="slider-row">
+            <label class="sr-only" for="alphaSlider">Opacity</label>
+            <div class="alpha-track">
+              <input id="alphaSlider" class="alpha-slider" type="range" min="0" max="100" value="46" />
+            </div>
+          </div>
+        </div>
+
+        <div class="picker-side">
+          <div class="preview-block">
+            <div class="preview-checkered">
+              <div id="preview" class="preview-fill"></div>
+            </div>
+            <span class="preview-label">Preview</span>
+          </div>
+
+          <div class="main-input-wrap">
+            <input
+              id="mainInput"
+              class="main-input"
+              type="text"
+              spellcheck="false"
+              autocomplete="off"
+              aria-label="Color value"
+              value="#0e86db75"
+            />
+            <button type="button" class="icon-btn" data-copy="main" aria-label="Copy color" title="Copy">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2" />
+                <path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <label class="opacity-label" for="opacity">
+            Opacity: <span id="opacityValue">46%</span>
+          </label>
+          <input id="opacity" type="range" min="0" max="100" value="46" />
+
+          <div class="swatches" aria-label="Common colors">
+            <button type="button" class="swatch" data-color="#ef4444" title="Red" style="--swatch:#ef4444"></button>
+            <button type="button" class="swatch" data-color="#22c55e" title="Green" style="--swatch:#22c55e"></button>
+            <button type="button" class="swatch" data-color="#3b82f6" title="Blue" style="--swatch:#3b82f6"></button>
+            <button type="button" class="swatch" data-color="#eab308" title="Yellow" style="--swatch:#eab308"></button>
+            <button type="button" class="swatch" data-color="#06b6d4" title="Cyan" style="--swatch:#06b6d4"></button>
+            <button type="button" class="swatch" data-color="#d946ef" title="Magenta" style="--swatch:#d946ef"></button>
+            <button type="button" class="swatch" data-color="#111827" title="Black" style="--swatch:#111827"></button>
+            <button type="button" class="swatch white" data-color="#ffffff" title="White" style="--swatch:#ffffff"></button>
+            <button type="button" class="swatch" data-color="#0e86db75" title="Semi-transparent" style="--swatch:#0e86db75"></button>
+            <button type="button" class="swatch checker" data-color="#00000000" title="Transparent"></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="formats" aria-label="Converted formats">
+        <div class="format-row">
+          <label for="hex">HEX</label>
+          <input id="hex" type="text" readonly />
+          <button type="button" class="icon-btn" data-copy="hex" aria-label="Copy HEX" title="Copy">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+        </div>
+        <div class="format-row">
+          <label for="hexa">HEXA</label>
+          <input id="hexa" type="text" readonly />
+          <button type="button" class="icon-btn" data-copy="hexa" aria-label="Copy HEXA" title="Copy">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+        </div>
+        <div class="format-row">
+          <label for="rgb">RGB</label>
+          <input id="rgb" type="text" readonly />
+          <button type="button" class="icon-btn" data-copy="rgb" aria-label="Copy RGB" title="Copy">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+        </div>
+        <div class="format-row">
+          <label for="rgba">RGBA</label>
+          <input id="rgba" type="text" readonly />
+          <button type="button" class="icon-btn" data-copy="rgba" aria-label="Copy RGBA" title="Copy">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+        </div>
+        <div class="format-row">
+          <label for="hsl">HSL</label>
+          <input id="hsl" type="text" readonly />
+          <button type="button" class="icon-btn" data-copy="hsl" aria-label="Copy HSL" title="Copy">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+        </div>
+        <div class="format-row">
+          <label for="hsla">HSLA</label>
+          <input id="hsla" type="text" readonly />
+          <button type="button" class="icon-btn" data-copy="hsla" aria-label="Copy HSLA" title="Copy">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+        </div>
+        <div class="format-row">
+          <label for="cmyk">CMYK</label>
+          <input id="cmyk" type="text" readonly />
+          <button type="button" class="icon-btn" data-copy="cmyk" aria-label="Copy CMYK" title="Copy">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
